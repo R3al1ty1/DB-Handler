@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  arangodb:
+    image: arangodb:3.12.4
+    container_name: arangodb
+    environment:
+      ARANGO_ROOT_PASSWORD: ${APP_CONFIG__DB__PASSWORD}
+    ports:
+      - "8529:8529"
+    volumes:
+      - arangodb_data:/var/lib/arangodb3
+
+  fastapi:
+    build: .
+    container_name: db_handler
+    ports:
+      - "8000:8000"
+    depends_on:
+      - arangodb
+    env_file:
+      - .env
+
+volumes:
+  arangodb_data:
