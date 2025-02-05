@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from typing import Dict
+from typing import Dict, List
 
 from core.settings import settings
 from core.schemas.handler import EnvironmentCreateRequest
@@ -27,12 +27,65 @@ async def create_environment(environment: EnvironmentCreateRequest):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка при создании области: {str(e)}")
-    
 
 
 
-@router.get("/environment/{environment_id}", response_model=Dict)
-async def add_db_to_environment(environment_id: str):
+@router.get("/environments", response_model=Dict[str, List[Dict]])
+async def get_environments():
+    try:
+        environments = db.collection("environments").all()
+        if not environments:
+            raise HTTPException(status_code=404, detail="Окружения не найдены")
+
+        result = []
+
+        for environment in environments:
+            try:
+                databases = db.collection("databases").find({"environment_id": environment["_key"]})
+            except Exception:
+                databases = []
+
+            databases_data = []
+
+            for database in databases:
+                tables = db.collection("tables").find({"database_id": database["_key"]})
+                tables_data = []
+
+                for table in tables:
+                    fields = db.collection("fields").find({"table_id": table["_key"]})
+                    fields_data = [
+                        {
+                            "field_name": field["name"],
+                            "field_type": field["type"],
+                            "constraints": field.get("constraints", ""),
+                            "foreign_key": field.get("foreign_key", "")
+                        }
+                        for field in fields
+                    ]
+
+                    tables_data.append({
+                        "table_name": table["name"],
+                        "fields": fields_data
+                    })
+
+                databases_data.append({
+                    "database_name": database["name"],
+                    "tables": tables_data
+                })
+
+            result.append({
+                "environment_name": environment["name"],
+                "databases": databases_data
+            })
+
+        return {"environments": result}
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Ошибка при извлечении данных: {str(e)}")
+
+
+@router.get("/environments/{environment_id}", response_model=Dict)
+async def get_databases_for_environment(environment_id: str):
     try:
         environment = db.collection("environments").get(environment_id)
         if not environment:

@@ -10,7 +10,7 @@ router = APIRouter(
 )
 
 
-@router.patch("/field/{field_from}/{field_to}/foreign_key", response_model=dict)
+@router.patch("/fields/{field_from}/{field_to}/foreign_key", response_model=dict)
 async def update_foreign_key(field_from: str, field_to: str):
     try:
         field = db.collection("fields").get(field_from)
@@ -27,7 +27,7 @@ async def update_foreign_key(field_from: str, field_to: str):
         raise HTTPException(status_code=500, detail=f"Ошибка при обновлении внешнего ключа: {str(e)}")
 
 
-@router.patch("/field/{field_id}/remove_foreign_key", response_model=dict)
+@router.patch("/fields/{field_id}/remove_foreign_key", response_model=dict)
 async def remove_foreign_key(field_id: str):
     try:
         field = db.collection("fields").get(field_id)

@@ -11,7 +11,7 @@ services:
     volumes:
       - arangodb_data:/var/lib/arangodb3
 
-  fastapi:
+  handler_backend:
     build: .
     container_name: db_handler
     ports:

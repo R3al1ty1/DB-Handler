@@ -10,7 +10,7 @@ router = APIRouter(
 )
 
 
-@router.delete("/table/{table_id}", response_model=dict)
+@router.delete("/tables/{table_id}", response_model=dict)
 async def delete_table(table_id: str):
     try:
         table = db.collection("tables").get(table_id)

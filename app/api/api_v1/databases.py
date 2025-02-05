@@ -22,7 +22,7 @@ async def get_databases():
 
 
 @router.get("/databases/{db_id}", response_model=Dict)
-async def get_database(db_id: str):
+async def get_specific_database(db_id: str):
     try:
         database = db.collection("databases").get(db_id)
         if not database:
@@ -56,7 +56,7 @@ async def get_database(db_id: str):
     
 
 @router.post("/database/add", response_model=Dict)
-async def create_database(
+async def add_database(
     environment_id: str = Form(...),
     file: UploadFile = File(...)
 ):
@@ -76,6 +76,7 @@ async def create_database(
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка при создании базы данных: {str(e)}")
+
 
 @router.delete("/database/{db_id}", response_model=dict)
 async def delete_database(db_id: str):
