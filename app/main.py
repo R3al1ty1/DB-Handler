@@ -6,12 +6,9 @@ from contextlib import asynccontextmanager
 
 from core.settings import settings
 from handler.inserter import generate_collections
-# from core.models.db_helper import db_helper
+from fastapi.middleware.cors import CORSMiddleware
 
-from api.api_v1.tables import router as table_router
-from api.api_v1.databases import router as db_router
-from api.api_v1.environments import router as env_router
-from api.api_v1.fields import router as field_router
+from api import router as api_router
 
 
 @asynccontextmanager
@@ -21,32 +18,33 @@ async def lifespan(app: FastAPI):
     yield
     print("🛑 Приложение выключается...")
 
+
 app = FastAPI(
     default_response_class=ORJSONResponse,
-    lifespan=lifespan
+    lifespan=lifespan,
+    title="""Автоматизированная среда для трансляции запросов
+            к мультимодельной базе данных""",
+    version="1.0.0"
 )
+
+origins = [
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 app.include_router(
-    env_router,
-    prefix=settings.api.prefix,
+    api_router,
+    prefix="/api"
 )
 
-
-
-app.include_router(
-    db_router,
-    prefix=settings.api.prefix,
-)
-
-app.include_router(
-    field_router,
-    prefix=settings.api.prefix,
-)
-
-app.include_router(
-    table_router,
-    prefix=settings.api.prefix,
-)
 
 if __name__=="__main__":
     uvicorn.run(

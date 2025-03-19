@@ -6,17 +6,3 @@ class UserBase(BaseModel):
 
 class UserRead(UserBase):
     id: int
-
-
-
-class EnvironmentCreateRequest(BaseModel):
-    name: str
-
-
-class DatabaseCreateRequest(BaseModel):
-    environment_id: str
-    name: str
-
-
-class UpdateForeignKeyRequest(BaseModel):
-    foreign_key: str

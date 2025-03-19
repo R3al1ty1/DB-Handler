@@ -1,55 +1,41 @@
-from fastapi import APIRouter, HTTPException, File, UploadFile, Form
+from fastapi import APIRouter, HTTPException, File, UploadFile, Form, Request
 from typing import List, Dict
-from handler.postgres_handler import parse_sql_file
 
+from handler.structure.postgres_handler import parse_sql_file
 from core.settings import settings
+from core.crud.databases import db_delete_database, db_get_database_specific, db_get_databases
 
 
 db = settings.db.db_client
 
 router = APIRouter(
-    prefix=settings.api.v1.arango,
+    # prefix=settings.api.v1.prefix,
     tags=["Databases"]
 )
 
-@router.get("/databases", response_model=List[Dict])
-async def get_databases():
-    try:
-        databases = db.collection("databases").all()
-        return [database for database in databases]
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Ошибка при извлечении данных: {str(e)}")
+# @router.get("/databases/{env_id}", response_model=List[Dict])
+# async def get_databases(
+#         env_id: str
+#     ):
+#     try:
+#         databases = await db_get_databases(env_id=env_id)
+#         if not databases:
+#             raise HTTPException(status_code=404, detail="Базы данных не найдены")
+
+#         return databases
+
+#     except Exception as e:
+#         raise HTTPException(status_code=500, detail=f"Ошибка при извлечении данных: {str(e)}")
 
 
 @router.get("/databases/{db_id}", response_model=Dict)
 async def get_specific_database(db_id: str):
     try:
-        database = db.collection("databases").get(db_id)
+        database = await db_get_database_specific(db_id=db_id)
         if not database:
             raise HTTPException(status_code=404, detail="База данных не найдена")
         
-        tables = db.collection("tables").find({"database_id": db_id})
-        
-        tables_data = []
-        for table in tables:
-            fields = db.collection("fields").find({"table_id": table["_key"]})
-            fields_data = []
-            for field in fields:
-                fields_data.append({
-                    "field_name": field["name"],
-                    "field_type": field["type"],
-                    "constraints": field.get("constraints", ""),
-                    "foreign_key": field.get("foreign_key", "")
-                })
-            tables_data.append({
-                "table_name": table["name"],
-                "fields": fields_data
-            })
-        
-        return {
-            "database_name": database["name"],
-            "tables": tables_data
-        }
+        return database
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Ошибка при извлечении данных: {str(e)}")
@@ -66,7 +52,7 @@ async def add_database(
             raise HTTPException(status_code=404, detail="Окружение не найдено")
 
         sql_content = await file.read()
-        sql_text = sql_content.decode("utf-8")
+        sql_content.decode("utf-8")
         
         parse_sql_file(file, environment_id )
 
@@ -78,22 +64,12 @@ async def add_database(
         raise HTTPException(status_code=500, detail=f"Ошибка при создании базы данных: {str(e)}")
 
 
-@router.delete("/database/{db_id}", response_model=dict)
+@router.delete("/database/delete/{db_id}", response_model=dict)
 async def delete_database(db_id: str):
     try:
-        database = db.collection("databases").get(db_id)
-        if not database:
+        res = await db_delete_database(db_id=db_id)
+        if not res:
             raise HTTPException(status_code=404, detail="База данных не найдена")
-
-        db.collection("databases").delete(db_id)
-
-        tables = db.collection("tables").find({"database_id": db_id})
-        for table in tables:
-            db.collection("tables").delete(table["_key"])
-
-            fields = db.collection("fields").find({"table_id": table["_key"]})
-            for field in fields:
-                db.collection("fields").delete(field["_key"])
 
         return {"message": f"База данных с ID '{db_id}' успешно удалена"}
     

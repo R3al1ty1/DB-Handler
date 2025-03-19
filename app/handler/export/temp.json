@@ -1,0 +1,620 @@
+{
+  "environment_name": "new_env",
+  "databases": [
+    {
+      "database_name": "default_db",
+      "tables": [
+        {
+          "table_name": "public.bid",
+          "fields": [
+            {
+              "field_name": "id",
+              "field_type": "bigint",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "name",
+              "field_type": "character varying(100)",
+              "constraints": "NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "description",
+              "field_type": "text",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "status",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "tender_id",
+              "field_type": "bigint",
+              "constraints": "NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "organization_id",
+              "field_type": "uuid",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "creator_username",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "created_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "updated_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "version",
+              "field_type": "integer",
+              "constraints": "NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "votes_for",
+              "field_type": "integer",
+              "constraints": "NOT_NULL",
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "public.bid_version",
+          "fields": [
+            {
+              "field_name": "id",
+              "field_type": "bigint",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "name",
+              "field_type": "character varying(100)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "description",
+              "field_type": "text",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "status",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "tender_id",
+              "field_type": "bigint",
+              "constraints": "NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "organization_id",
+              "field_type": "uuid",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "creator_username",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "created_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "updated_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "version",
+              "field_type": "integer",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "votes_for",
+              "field_type": "integer",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "bid_id",
+              "field_type": "integer",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "public.bid_voters",
+          "fields": [
+            {
+              "field_name": "bid_id",
+              "field_type": "integer",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "voter_id",
+              "field_type": "uuid",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "public.employee",
+          "fields": [
+            {
+              "field_name": "id",
+              "field_type": "uuid",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "username",
+              "field_type": "character varying(50)",
+              "constraints": "UNIQUE NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "first_name",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "last_name",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "created_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "updated_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "public.organization",
+          "fields": [
+            {
+              "field_name": "id",
+              "field_type": "uuid",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "name",
+              "field_type": "character varying(100)",
+              "constraints": "NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "description",
+              "field_type": "text",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "type",
+              "field_type": "text",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "created_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "updated_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "public.organization_responsible",
+          "fields": [
+            {
+              "field_name": "id",
+              "field_type": "uuid",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "organization_id",
+              "field_type": "uuid",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "user_id",
+              "field_type": "uuid",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "public.review",
+          "fields": [
+            {
+              "field_name": "id",
+              "field_type": "uuid DEFAULT public.uuid_generate_v4()",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "bid_id",
+              "field_type": "integer",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "user_id",
+              "field_type": "uuid",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "content",
+              "field_type": "text",
+              "constraints": "NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "created_at",
+              "field_type": "timestamp without time zone DEFAULT CURRENT_TIMESTAMP",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "updated_at",
+              "field_type": "timestamp without time zone DEFAULT CURRENT_TIMESTAMP",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "public.tender",
+          "fields": [
+            {
+              "field_name": "id",
+              "field_type": "bigint",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "name",
+              "field_type": "character varying(100)",
+              "constraints": "NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "description",
+              "field_type": "text",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "service_type",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "status",
+              "field_type": "character varying(50)",
+              "constraints": "NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "organization_id",
+              "field_type": "uuid",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "creator_username",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "created_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "updated_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "version",
+              "field_type": "integer",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "public.tender_version",
+          "fields": [
+            {
+              "field_name": "id",
+              "field_type": "bigint",
+              "constraints": "PRIMARY_KEY NOT_NULL",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "name",
+              "field_type": "character varying(100)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "description",
+              "field_type": "text",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "service_type",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "status",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "organization_id",
+              "field_type": "uuid",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "creator_username",
+              "field_type": "character varying(50)",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "created_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "updated_at",
+              "field_type": "timestamp without time zone",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "version",
+              "field_type": "integer",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "tender_id",
+              "field_type": "integer",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "database_name": "mongodb_db",
+      "tables": [
+        {
+          "table_name": "customers",
+          "fields": [
+            {
+              "field_name": "_id",
+              "field_type": "string",
+              "constraints": "PRIMARY_KEY",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "name",
+              "field_type": "string",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "contact",
+              "field_type": "object",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "address",
+              "field_type": "string",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "tenders",
+          "fields": [
+            {
+              "field_name": "_id",
+              "field_type": "string",
+              "constraints": "PRIMARY_KEY",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "title",
+              "field_type": "string",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "description",
+              "field_type": "string",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "start_date",
+              "field_type": "date",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "end_date",
+              "field_type": "date",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "status",
+              "field_type": "string",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "budget",
+              "field_type": "number",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "customer_id",
+              "field_type": "string",
+              "constraints": "FOREIGN_KEY",
+              "foreign_key": "customers"
+            }
+          ]
+        },
+        {
+          "table_name": "companies",
+          "fields": [
+            {
+              "field_name": "_id",
+              "field_type": "string",
+              "constraints": "PRIMARY_KEY",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "name",
+              "field_type": "string",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "industry",
+              "field_type": "string",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "contact",
+              "field_type": "object",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "registration_date",
+              "field_type": "date",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        },
+        {
+          "table_name": "bids",
+          "fields": [
+            {
+              "field_name": "_id",
+              "field_type": "string",
+              "constraints": "PRIMARY_KEY",
+              "foreign_key": ""
+            },
+            {
+              "field_name": "tender_id",
+              "field_type": "string",
+              "constraints": "FOREIGN_KEY",
+              "foreign_key": "tenders"
+            },
+            {
+              "field_name": "company_id",
+              "field_type": "string",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "bid_amount",
+              "field_type": "number",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "submission_date",
+              "field_type": "date",
+              "constraints": null,
+              "foreign_key": ""
+            },
+            {
+              "field_name": "status",
+              "field_type": "string",
+              "constraints": null,
+              "foreign_key": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

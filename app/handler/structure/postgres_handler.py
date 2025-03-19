@@ -66,13 +66,10 @@ def parse_sql_dump(env_id: str, sql_dump: str):
 
     tables = table_pattern.findall(sql_dump)
     if not tables:
-        print("Не найдено таблиц в дампе.")
         return
-
-    print("Обработка CREATE TABLE блоков:\n")
+    
     for schema, table_name, table_body in tables:
         full_table_name = f"{schema}.{table_name}" if schema else table_name
-        print(f"Таблица: {full_table_name}")
 
         table_id = inserter.upload_table(db_id, full_table_name)
         
@@ -113,7 +110,6 @@ def parse_sql_dump(env_id: str, sql_dump: str):
 
             else:
                 print(f"  [Не удалось разобрать]: {line}")
-        print()
 
 
 def parse_table_level_constraints(sql_dump: str):
@@ -175,7 +171,7 @@ def parse_sql_file(file: UploadFile, env_id: str):
         sql_dump = file.file.read().decode("utf-8")
 
         if not sql_dump.strip():
-            print("Файл пустой или не содержит SQL-кода")
+            ("Файл пустой или не содержит SQL-кода")
             return
 
         parse_sql_dump(env_id, sql_dump)

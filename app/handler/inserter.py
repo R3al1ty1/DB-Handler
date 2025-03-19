@@ -6,6 +6,7 @@ from arango import ArangoClient
 db = settings.db.db_client
 
 def generate_collections():
+    """Функция для генерации коллекций обработки входящих БД."""
     client = ArangoClient(hosts=settings.db.host)
     sys_db = client.db("_system", username=settings.db.username, password=settings.db.password)
 
@@ -18,7 +19,6 @@ def generate_collections():
     for collection in collections:
         if not db.has_collection(collection):
             db.create_collection(collection)
-            print(f"✅ Коллекция '{collection}' создана.")
         else:
             print(f"⚡ Коллекция '{collection}' уже существует.")
 
